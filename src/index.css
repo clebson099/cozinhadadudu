@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: #F9F6F1;
+  color: #2F3A3A;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #C2CFBB; border-radius: 8px; }
+
+@layer components {
+  .card { @apply bg-white rounded-xl2 shadow-soft border border-cream-dark/60; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none; }
+  .btn-primary { @apply btn bg-graphite text-cream px-5 py-3 hover:bg-graphite-light; }
+  .btn-accent { @apply btn bg-peach text-graphite px-5 py-3 hover:bg-peach-dark; }
+  .btn-sage { @apply btn bg-sage text-white px-5 py-3 hover:bg-sage-dark; }
+  .btn-ghost { @apply btn bg-cream-dark/60 text-graphite px-4 py-2.5 hover:bg-cream-dark; }
+  .input { @apply w-full rounded-2xl border border-cream-dark bg-cream/40 px-4 py-3 outline-none transition focus:border-sage focus:bg-white focus:ring-2 focus:ring-sage/30; }
+  .label { @apply block text-sm font-semibold text-graphite mb-1.5; }
+  .chip { @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold; }
+}
