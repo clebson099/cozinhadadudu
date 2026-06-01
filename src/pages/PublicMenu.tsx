@@ -7,7 +7,7 @@ import { useMenuLink } from "@/hooks/useMenuLink";
 import { useData } from "@/contexts/DataContext";
 import { customerSchema, type CustomerFormValues } from "@/utils/schemas";
 import { buildShoppingList } from "@/utils/calculations";
-import { formatQty } from "@/utils/format";
+
 import type { Dish } from "@/types";
 import Logo from "@/components/Logo";
 import { mockUser } from "@/mock/data";
