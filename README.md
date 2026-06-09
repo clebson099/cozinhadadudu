@@ -52,17 +52,36 @@ Cardápio de exemplo já populado: `/cardapio/abc123`
 ## 🗄️ Dados & Supabase (preparado)
 
 Hoje a app usa **dados mockados + localStorage** através do *Repository Pattern*
-(`src/services`). Para conectar ao Supabase no futuro:
+(`src/services`). A camada Supabase **já está implementada** — basta ligar:
 
-1. `npm i @supabase/supabase-js`
-2. Preencha `.env` (veja `.env.example`): `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`
-3. Descomente `src/services/supabaseClient.ts`
-4. Crie implementações Supabase das interfaces em `src/services/repositories.ts`
-5. Troque os repositórios em `src/services/index.ts` — **nada mais muda**
+**1. Criar as tabelas no Supabase**
 
-Tabelas planejadas: `users`, `dishes`, `ingredients`, `dish_ingredients`,
-`menu_links`, `menu_link_dishes`, `customers`, `orders`, `order_dishes`,
-`shopping_lists`, `shopping_list_items`.
+No painel do seu projeto: **SQL Editor → New query**, cole o conteúdo de
+`supabase/schema.sql` e clique em **Run** (cria as 11 tabelas + RLS).
+Opcional: rode depois `supabase/seed.sql` para popular com pratos de exemplo.
+
+**2. Configurar as credenciais**
+
+Copie `.env.example` para `.env` e preencha (pegue em *Project Settings → API*):
+
+```
+VITE_SUPABASE_URL=https://xxxxx.supabase.co
+VITE_SUPABASE_ANON_KEY=sua-anon-key
+```
+
+**3. Pronto.** O app detecta as variáveis automaticamente e passa a usar a nuvem.
+Se as variáveis ficarem **em branco**, ele volta ao modo local (mock + localStorage).
+A troca é automática via `src/services/index.ts` (`DATA_SOURCE`) — a UI não muda.
+
+| Modo | Quando | Onde os dados ficam |
+|------|--------|---------------------|
+| **local** | `.env` sem credenciais | localStorage do aparelho |
+| **supabase** | `.env` preenchido | Banco na nuvem — pedidos dos clientes caem sozinhos |
+
+Tabelas (em `supabase/schema.sql`): `users`, `dishes`, `ingredients`,
+`dish_ingredients`, `menu_links`, `menu_link_dishes`, `customers`, `orders`,
+`order_dishes`, `shopping_lists`, `shopping_list_items`. RLS: leitura pública de
+cardápios/pratos, inserção pública de pedidos, e gestão pela anon key.
 
 ## ☁️ Deploy — Cloudflare Pages
 

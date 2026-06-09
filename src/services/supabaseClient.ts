@@ -1,13 +1,15 @@
-// Supabase client — prepared but NOT active yet.
-// When ready: `npm i @supabase/supabase-js`, fill .env, then uncomment.
-//
-// import { createClient } from "@supabase/supabase-js";
-// import type { Database } from "@/types/database";
-//
-// const url = import.meta.env.VITE_SUPABASE_URL;
-// const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
-// export const supabase = createClient<Database>(url, key);
+// Supabase client — ativo quando as variáveis de ambiente estão presentes.
+// Requer: npm i @supabase/supabase-js
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-export const SUPABASE_ENABLED = Boolean(
-  import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+const url = import.meta.env.VITE_SUPABASE_URL;
+const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// true quando ha URL + ANON KEY configuradas no .env
+export const SUPABASE_ENABLED = Boolean(url && key);
+
+// So cria o client se houver credenciais — assim o app continua
+// funcionando em modo local (mock/localStorage) quando nao configurado.
+export const supabase: SupabaseClient | null = SUPABASE_ENABLED
+  ? createClient(url as string, key as string)
+  : null;
